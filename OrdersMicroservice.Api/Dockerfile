@@ -26,5 +26,7 @@ RUN dotnet publish "./OrdersMicroservice.Api.csproj" -c $BUILD_CONFIGURATION -o 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
+ENV MONGODB_HOST=localhost
+ENV MONGODB_PORT=27017
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "OrdersMicroservice.Api.dll"]

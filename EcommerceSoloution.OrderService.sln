@@ -5,6 +5,10 @@ VisualStudioVersion = 17.14.36915.13 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrdersMicroservice.Api", "OrdersMicroservice.Api\OrdersMicroservice.Api.csproj", "{2116334B-65A1-4E60-BFC0-2ACA8ED1297B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BussnissLogicLayer", "BussnissLogicLayer\BussnissLogicLayer.csproj", "{B3BF8D5C-6402-4D0F-A209-621AB4BE620D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{CF0F527F-FB62-49D9-BDE6-CDD207E6FCCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{2116334B-65A1-4E60-BFC0-2ACA8ED1297B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2116334B-65A1-4E60-BFC0-2ACA8ED1297B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2116334B-65A1-4E60-BFC0-2ACA8ED1297B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3BF8D5C-6402-4D0F-A209-621AB4BE620D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3BF8D5C-6402-4D0F-A209-621AB4BE620D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3BF8D5C-6402-4D0F-A209-621AB4BE620D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3BF8D5C-6402-4D0F-A209-621AB4BE620D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF0F527F-FB62-49D9-BDE6-CDD207E6FCCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF0F527F-FB62-49D9-BDE6-CDD207E6FCCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF0F527F-FB62-49D9-BDE6-CDD207E6FCCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF0F527F-FB62-49D9-BDE6-CDD207E6FCCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
