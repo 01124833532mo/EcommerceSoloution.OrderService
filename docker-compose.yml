@@ -1,0 +1,65 @@
+services:
+  ordersmicroservice.api:
+    image: ordersmicroserviceapi
+    build:
+      context: .
+      dockerfile: OrdersMicroservice.Api/Dockerfile
+    environment:
+      - MONGODB_HOST=mongodb-container
+      - MONGODB_PORT=27017
+      - MONGODB_DATABASE=OrdersDb
+      - UsersMicroserviceName=localhost
+      - UsersMicroservicePort=5050
+    ports:
+      - "7000:8080"
+    networks:
+      - orders-mongodb-network
+      - ecommerce-network
+    depends_on:
+        - mongodb-container
+      
+  mongodb-container:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - E:/mongodb-init:/docker-entrypoint-initdb.d
+    networks:
+      - orders-mongodb-network
+
+  products-microservice:
+    image: products-microservice:latest
+    environment:
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_ENVIRONMENT=Development
+      - MYSQL_HOST=mysql-container
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=ecommerceproductsdatabase
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=admin
+    ports:
+      - "6000:8080"
+    networks:
+      - products-mysql-network
+      - ecommerce-network
+    depends_on:
+        - mysql-container
+
+  mysql-container:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+    ports:
+      - "3309:3306"
+    volumes:
+      - E:/mysql-init2:/docker-entrypoint-initdb.d
+    networks:
+      - products-mysql-network
+
+networks:
+  orders-mongodb-network:
+    driver: bridge
+  products-mysql-network:
+    driver: bridge
+  ecommerce-network:
+    driver: bridge

@@ -28,5 +28,9 @@ FROM base AS final
 WORKDIR /app
 ENV MONGODB_HOST=localhost
 ENV MONGODB_PORT=27017
+ENV MONGODB_DATABASE=OrdersDb
+ENV UsersMicroserviceName=localhost
+ENV UsersMicroservicePort=9090
+
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "OrdersMicroservice.Api.dll"]
