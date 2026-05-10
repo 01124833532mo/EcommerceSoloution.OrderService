@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Polly;
+using Polly.CircuitBreaker;
 using Polly.Retry;
 
 namespace BussnissLogicLayer.Policies
@@ -13,6 +14,31 @@ namespace BussnissLogicLayer.Policies
             _logger = logger;
 
         }
+
+        public IAsyncPolicy<HttpResponseMessage> GetCirCuitBreakerPolicy()
+        {
+            AsyncCircuitBreakerPolicy<HttpResponseMessage> policy =
+                             Policy.HandleResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
+                               .CircuitBreakerAsync(
+                                   handledEventsAllowedBeforeBreaking: 3,
+                                   durationOfBreak: TimeSpan.FromMinutes(2),
+                                   onBreak: (outcome, timespan) =>
+                                   {
+                                       _logger.LogInformation("Circuit breaker triggered due to: {Reason}. Breaking for {Delay}.",
+                                           outcome.Result?.StatusCode, timespan);
+                                   }
+                                   ,
+                                   onReset: () =>
+                                   {
+                                       _logger.LogInformation("Circuit breaker reset. Resuming normal operation.");
+
+                                   }
+
+
+                                  );
+            return policy;
+        }
+
         public IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
         {
             AsyncRetryPolicy<HttpResponseMessage> policy =

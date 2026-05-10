@@ -43,6 +43,8 @@ builder.Services.AddHttpClient<UsersMicroserviceClient>(client =>
     client.BaseAddress = new Uri($"http://{builder.Configuration["UsersMicroserviceName"]}:{builder.Configuration["UsersMicroservicePort"]}");
 }).AddPolicyHandler(
         builder.Services.BuildServiceProvider().GetRequiredService<IUserMicroServicePolicies>().GetRetryPolicy()
+    ).AddPolicyHandler(
+        builder.Services.BuildServiceProvider().GetRequiredService<IUserMicroServicePolicies>().GetCirCuitBreakerPolicy()
     );
 
 
