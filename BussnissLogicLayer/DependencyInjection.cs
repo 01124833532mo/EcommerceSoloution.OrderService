@@ -21,10 +21,7 @@ namespace eCommerce.OrdersMicroservice.BusinessLogicLayer
             string userMicroserviceHost = Environment.GetEnvironmentVariable("UserMicroserviceName") ?? "localhost";
             string userMicroservicePort = Environment.GetEnvironmentVariable("UserMicroservicePort") ?? "9090";
 
-            services.AddHttpClient<UsersMicroserviceClient>(client =>
-            {
-                client.BaseAddress = new Uri($"http://{userMicroserviceHost}:{userMicroservicePort}");
-            });
+          
 
             services.AddScoped<IOrdersService, OrdersService>();
             return services;
