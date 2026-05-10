@@ -1,10 +1,10 @@
 using BussnissLogicLayer.HttpClients;
+using BussnissLogicLayer.Policies;
 using eCommerce.OrdersMicroservice.API.Middleware;
 using eCommerce.OrdersMicroservice.BusinessLogicLayer;
 using eCommerce.OrdersMicroservice.DataAccessLayer;
 using FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
-using Polly;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,22 +34,18 @@ builder.Services.AddCors(options =>
         .AllowAnyHeader();
     });
 });
+
+builder.Services.AddTransient<IUserMicroServicePolicies, UserMicroServicePolicies>();
+
+
 builder.Services.AddHttpClient<UsersMicroserviceClient>(client =>
 {
     client.BaseAddress = new Uri($"http://{builder.Configuration["UsersMicroserviceName"]}:{builder.Configuration["UsersMicroservicePort"]}");
 }).AddPolicyHandler(
-
-    Policy.HandleResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
-        .WaitAndRetryAsync(
-            retryCount: 5,
-            sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
-            onRetry: (outcome, timespan, retryAttempt, context) =>
-            {
-                Console.WriteLine($"Retrying... Attempt: {retryAttempt}, Waiting: {timespan.TotalSeconds} seconds");
-            }
-        )
-
+        builder.Services.BuildServiceProvider().GetRequiredService<IUserMicroServicePolicies>().GetRetryPolicy()
     );
+
+
 
 
 var app = builder.Build();
