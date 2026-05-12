@@ -48,6 +48,8 @@ builder.Services.AddHttpClient<UsersMicroserviceClient>(client =>
         builder.Services.BuildServiceProvider().GetRequiredService<IUserMicroServicePolicies>().GetCirCuitBreakerPolicy()
     ).AddPolicyHandler(
         builder.Services.BuildServiceProvider().GetRequiredService<IProductMicroservicePolicies>().GetFallBackPollicy()
+    ).AddPolicyHandler(
+        builder.Services.BuildServiceProvider().GetRequiredService<IUserMicroServicePolicies>().GetTimeOutPolicy()
     );
 
 

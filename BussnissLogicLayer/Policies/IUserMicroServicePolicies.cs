@@ -6,5 +6,6 @@ namespace BussnissLogicLayer.Policies
     {
         IAsyncPolicy<HttpResponseMessage> GetRetryPolicy();
         IAsyncPolicy<HttpResponseMessage> GetCirCuitBreakerPolicy();
+        IAsyncPolicy<HttpResponseMessage> GetTimeOutPolicy();
     }
 }
