@@ -36,6 +36,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddTransient<IUserMicroServicePolicies, UserMicroServicePolicies>();
+builder.Services.AddTransient<IProductMicroservicePolicies, ProductMicroservicePolicies>();
 
 
 builder.Services.AddHttpClient<UsersMicroserviceClient>(client =>
@@ -45,6 +46,8 @@ builder.Services.AddHttpClient<UsersMicroserviceClient>(client =>
         builder.Services.BuildServiceProvider().GetRequiredService<IUserMicroServicePolicies>().GetRetryPolicy()
     ).AddPolicyHandler(
         builder.Services.BuildServiceProvider().GetRequiredService<IUserMicroServicePolicies>().GetCirCuitBreakerPolicy()
+    ).AddPolicyHandler(
+        builder.Services.BuildServiceProvider().GetRequiredService<IProductMicroservicePolicies>().GetFallBackPollicy()
     );
 
 
