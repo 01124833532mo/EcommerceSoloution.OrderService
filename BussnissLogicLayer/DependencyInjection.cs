@@ -1,5 +1,4 @@
-﻿using BussnissLogicLayer.HttpClients;
-using eCommerce.ordersMicroservice.BusinessLogicLayer.Mappers;
+﻿using eCommerce.ordersMicroservice.BusinessLogicLayer.Mappers;
 using eCommerce.ordersMicroservice.BusinessLogicLayer.Services;
 using eCommerce.OrdersMicroservice.BusinessLogicLayer.ServiceContracts;
 using eCommerce.OrdersMicroservice.BusinessLogicLayer.Validators;
@@ -21,9 +20,14 @@ namespace eCommerce.OrdersMicroservice.BusinessLogicLayer
             string userMicroserviceHost = Environment.GetEnvironmentVariable("UserMicroserviceName") ?? "localhost";
             string userMicroservicePort = Environment.GetEnvironmentVariable("UserMicroservicePort") ?? "9090";
 
-          
+
 
             services.AddScoped<IOrdersService, OrdersService>();
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = $"{Environment.GetEnvironmentVariable("RedisHost") ?? "localhost"}:{Environment.GetEnvironmentVariable("RedisPort") ?? "6379"}";
+            });
+
             return services;
         }
     }
