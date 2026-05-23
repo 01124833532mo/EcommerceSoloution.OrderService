@@ -1,4 +1,5 @@
-﻿using eCommerce.ordersMicroservice.BusinessLogicLayer.Mappers;
+﻿using BussnissLogicLayer.RabbitMQ;
+using eCommerce.ordersMicroservice.BusinessLogicLayer.Mappers;
 using eCommerce.ordersMicroservice.BusinessLogicLayer.Services;
 using eCommerce.OrdersMicroservice.BusinessLogicLayer.ServiceContracts;
 using eCommerce.OrdersMicroservice.BusinessLogicLayer.Validators;
@@ -23,6 +24,8 @@ namespace eCommerce.OrdersMicroservice.BusinessLogicLayer
 
 
             services.AddScoped<IOrdersService, OrdersService>();
+            services.AddTransient<IRabbitMQProductNameUpdateConsumer, RabbitMQProductNameUpdateConsumer>();
+            services.AddHostedService<RabbitMQProductNameUpdateHostedService>();
             services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = $"{Environment.GetEnvironmentVariable("RedisHost") ?? "localhost"}:{Environment.GetEnvironmentVariable("RedisPort") ?? "6379"}";
